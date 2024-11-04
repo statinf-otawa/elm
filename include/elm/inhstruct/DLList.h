@@ -31,31 +31,38 @@ class DLNode {
 	friend class DLList;
 	DLNode *nxt, *prv;
 public:
+	DLNode() : nxt(nullptr), prv(nullptr) {}
+
 	inline DLNode *next(void) const { return nxt; }
 	inline DLNode *previous(void) const { return prv; }
-	inline bool atBegin(void) const { return prv == 0; }
-	inline bool atEnd(void) const { return nxt == 0; }
+	inline bool atBegin(void) const { return prv == nullptr; }
+	inline bool atEnd(void) const { return nxt == nullptr; }
 	
 	inline void replace(DLNode *node) {
 		ASSERTP(node, "null node for replacement");
-		nxt->prv = node; node->nxt = nxt;
-		prv->nxt = node; node->prv = prv;
+		if (nxt) nxt->prv = node;
+		node->nxt = nxt;
+		if (prv) prv->nxt = node;
+		node->prv = prv;
 	}
 
 	inline void insertAfter(DLNode *node) {
 		ASSERTP(node, "null node to insert");
-		nxt->prv = node; node->nxt = nxt;
+		if (nxt) nxt->prv = node;
+		node->nxt = nxt;
 		nxt = node; node->prv = this;
 	}
 
 	inline void insertBefore(DLNode *node) {
 		ASSERTP(node, "null node to insert");
-		prv->nxt = node; node->prv = prv;
+		if (prv) prv->nxt = node;
+		node->prv = prv;
 		prv = node; node->nxt = this;
 	}
 
-	inline void remove(void)
-		{ prv->nxt = nxt; nxt->prv = prv; }
+	inline void remove(void) {
+		if (prv) prv->nxt = nxt;
+		if (nxt) nxt->prv = prv; }
 	inline void removeNext(void)
 		{ ASSERTP(!nxt->atEnd(), "no next node"); nxt->remove(); }
 	inline void removePrevious(void)
