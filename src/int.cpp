@@ -125,7 +125,7 @@ namespace elm {
  */
 int msb(t::uint32 i) {
 	#define LT(n) n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n
-	static const char tab[256] = {
+	static const signed char tab[256] = {
 		-1, 0, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3,
 		LT(4), LT(5), LT(5), LT(6), LT(6), LT(6), LT(6),
 		LT(7), LT(7), LT(7), LT(7), LT(7), LT(7), LT(7), LT(7)
